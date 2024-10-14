@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class OnlineQuiz {
+
+    // Define a Question class to hold the question and answer details
+    static class Question {
+        String question;
+        String[] options;
+        char correctAnswer;
+
+        public Question(String question, String[] options, char correctAnswer) {
+            this.question = question;
+            this.options = options;
+            this.correctAnswer = correctAnswer;
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Sample quiz questions
+        Question[] quiz = {
+            new Question("What is the capital of France?", new String[]{"A. London", "B. Berlin", "C. Paris", "D. Madrid"}, 'C'),
+            new Question("Which planet is known as the Red Planet?", new String[]{"A. Earth", "B. Mars", "C. Jupiter", "D. Venus"}, 'B'),
+            new Question("Who wrote 'Hamlet'?", new String[]{"A. Charles Dickens", "B. Mark Twain", "C. William Shakespeare", "D. Leo Tolstoy"}, 'C'),
+            new Question("Which element has the chemical symbol 'O'?", new String[]{"A. Gold", "B. Oxygen", "C. Iron", "D. Hydrogen"}, 'B')
+        };
+
+        int score = 0;
+
+        System.out.println("Welcome to the Online Quiz!");
+        System.out.println("Please select the correct option (A, B, C, D).\n");
+
+        // Loop through each question
+        for (int i = 0; i < quiz.length; i++) {
+            System.out.println((i + 1) + ". " + quiz[i].question);
+            for (String option : quiz[i].options) {
+                System.out.println(option);
+            }
+
+            // Get user's answer
+            System.out.print("Your answer: ");
+            char userAnswer = scanner.next().toUpperCase().charAt(0);
+
+            // Validate input
+            if (userAnswer < 'A' || userAnswer > 'D') {
+                System.out.println("Invalid input. Please enter A, B, C, or D.\n");
+                i--; // Repeat the current question
+                continue; // Skip to the next iteration
+            }
+
+            // Check if the answer is correct
+            if (userAnswer == quiz[i].correctAnswer) {
+                System.out.println("Correct!\n");
+                score++;
+            } else {
+                System.out.println("Wrong! The correct answer was " +quiz[i].correctAnswer + ".\n");
+            }
+        }
+
+        // Display the final score
+        System.out.println("Quiz completed!");
+        System.out.println("Your score is: " +score+ "/" +quiz.length);
+
+        scanner.close();
+    }
+}
