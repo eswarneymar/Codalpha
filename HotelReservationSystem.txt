@@ -1,0 +1,96 @@
+import java.util.Scanner;
+
+public class HotelReservationSystem {
+
+    // Room class to hold room information
+    static class Room {
+        int roomNumber;
+        String roomType;
+        boolean isAvailable;
+
+        public Room(int roomNumber, String roomType) {
+            this.roomNumber = roomNumber;
+            this.roomType = roomType;
+            this.isAvailable = true; // Room is available by default
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Sample room data
+        Room[] rooms = {
+            new Room(101, "Single"),
+            new Room(102, "Double"),
+            new Room(103, "Suite"),
+            new Room(104, "Single"),
+            new Room(105, "Double"),
+        };
+
+        boolean running = true;
+
+        while (running) {
+            System.out.println("Welcome to the Hotel Reservation System!");
+            System.out.println("1. View Available Rooms");
+            System.out.println("2. Book a Room");
+            System.out.println("3. Exit");
+
+            System.out.print("Please select an option: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    // Display available rooms
+                    System.out.println("\nAvailable Rooms:");
+                    boolean hasAvailableRooms = false;
+                    for (Room room : rooms) {
+                        if (room.isAvailable) {
+                            System.out.println("Room " +room.roomNumber+ " - " +room.roomType);
+                            hasAvailableRooms = true;
+                        }
+                    }
+                    if (!hasAvailableRooms) {
+                        System.out.println("No rooms available.");
+                    }
+                    System.out.println();
+                    break;
+
+                case 2:
+                    // Book a room
+                    System.out.println("\nEnter the room number you want to book: ");
+                    int roomNumber = scanner.nextInt();
+                    boolean found = false;
+
+                    for (Room room : rooms) {
+                        if (room.roomNumber == roomNumber) {
+                            found = true;
+                            if (room.isAvailable) {
+                                room.isAvailable = false;
+                                System.out.println("Room " +room.roomNumber+ " (" +room.roomType+ ") has been booked.\n");
+                            } else {
+                                System.out.println("Sorry, Room " +room.roomNumber+ " is already booked.\n");
+                            }
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        System.out.println("Invalid room number.\n");
+                    }
+                    break;
+
+                case 3:
+                    // Exit the system
+                    System.out.println("Exiting the system. Thank you!");
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Please try again.\n");
+            }
+        }
+
+        scanner.close();
+    }
+}
